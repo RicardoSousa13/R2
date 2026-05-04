@@ -41,36 +41,49 @@
       <img class="mark mark-2" alt="2" src="2.svg" />
 
       <footer>
-        <button id="about-footer" class="info-trigger" type="button">info</button>
+        <button id="about-footer" class="info-trigger" type="button">
+          info
+        </button>
       </footer>
     </main>
 
     <section class="info-overlay" aria-hidden="true">
-      <button class="info-close" type="button" aria-label="Close information">close</button>
-      <div class="info-content" role="dialog" aria-modal="true" aria-labelledby="info-title">
+      <button class="info-close" type="button" aria-label="Close information">
+        close
+      </button>
+      <div
+        class="info-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="info-title"
+      >
         <h3 id="info-title">R2</h3>
         <p>
-          R2 is the signature of the designers and artists Lizá Défossez Ramalho (Troyes, France)
-          and Artur Rebelo (Porto, Portugal).
+          R2 is the signature of the designers and artists Lizá Défossez Ramalho
+          (Troyes, France) and Artur Rebelo (Porto, Portugal).
         </p>
         <p>
-          R2's practice extends beyond conventional boundaries, navigating both typical graphic
-          design's two-dimensional mediums and architectural landscapes. R2 has earned global
-          acclaim for its groundbreaking projects that contributed to redefine the boundaries of the
-          design field. Driven by an unwavering commitment to excellence, they passionately devote
-          themselves to crafting high-quality, both conceptually and visually, designed projects. R2
-          Design studio was co-founded in 1995 by Defossez Ramalho & Rebelo and works with cultural
-          institutions and commercial clients in fields ranging from culture and lifestyle to
-          industry.
+          R2's practice extends beyond conventional boundaries, navigating both
+          typical graphic design's two-dimensional mediums and architectural
+          landscapes. R2 has earned global acclaim for its groundbreaking
+          projects that contributed to redefine the boundaries of the design
+          field. Driven by an unwavering commitment to excellence, they
+          passionately devote themselves to crafting high-quality, both
+          conceptually and visually, designed projects. R2 Design studio was
+          co-founded in 1995 by Defossez Ramalho & Rebelo and works with
+          cultural institutions and commercial clients in fields ranging from
+          culture and lifestyle to industry.
         </p>
         <p>
-          R2's multidisciplinary approach allows them to respond effectively to a wide range of
-          projects from Dam Signage in the Douro River (with Souto de Moura-Architects) to extensive
-          branding that includes typography on building ceilings (Casa & typography do Conto), to a
-          complex museum graphic identity with more than 14 locations (Museu do Porto). Recent
-          projects includes branding project for Évora 2027, European Culture Capital in 2027 as
-          well as for Vhils Studio.
+          R2's multidisciplinary approach allows them to respond effectively to
+          a wide range of projects from Dam Signage in the Douro River (with
+          Souto de Moura-Architects) to extensive branding that includes
+          typography on building ceilings (Casa & typography do Conto), to a
+          complex museum graphic identity with more than 14 locations (Museu do
+          Porto). Recent projects includes branding project for Évora 2027,
+          European Culture Capital in 2027 as well as for Vhils Studio.
         </p>
+        <p>New Website Coming Soon</p>
       </div>
       <aside class="info-sidebar" aria-label="Services and contacts">
         <div class="services">
@@ -137,7 +150,8 @@
           const maxY = window.innerHeight - rect.height - padding;
           const edge = getEdge(mark);
 
-          mark.style.left = edge === "left" ? `${padding}px` : `${Math.max(padding, maxX)}px`;
+          mark.style.left =
+            edge === "left" ? `${padding}px` : `${Math.max(padding, maxX)}px`;
           mark.style.top = `${randomBetween(padding, Math.max(padding, maxY))}px`;
         });
       }
@@ -177,11 +191,15 @@
       );
 
       document.addEventListener("click", (event) => {
-        if (event.target.closest(".info-trigger") || event.target.closest(".info-overlay")) {
+        if (
+          event.target.closest(".info-trigger") ||
+          event.target.closest(".info-overlay")
+        ) {
           return;
         }
 
-        const direction = event.clientX > window.innerWidth / 2 ? "next" : "previous";
+        const direction =
+          event.clientX > window.innerWidth / 2 ? "next" : "previous";
         document.body.dataset.slideDirection = direction;
         navigateSlides(direction);
       });
