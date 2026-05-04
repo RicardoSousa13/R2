@@ -15,12 +15,204 @@
   </head>
 
   <body>
+    <div class="slider" aria-hidden="true">
+      <img class="slide is-active" src="images/slides/slide-01.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-02.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-03.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-04.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-05.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-06.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-07.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-08.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-09.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-10.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-11.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-12.jpg" alt="" />
+    </div>
+
     <main>
       <nav>
         <h1>R2</h1>
         <h2>Graphic Design & Art Practice</h2>
-        <a id="about">info</a>
+        <button id="about" class="info-trigger" type="button">info</button>
       </nav>
+
+      <img class="mark mark-r" alt="R" src="R.svg" />
+      <img class="mark mark-2" alt="2" src="2.svg" />
+
+      <footer>
+        <button id="about-footer" class="info-trigger" type="button">info</button>
+      </footer>
     </main>
+
+    <section class="info-overlay" aria-hidden="true">
+      <button class="info-close" type="button" aria-label="Close information">close</button>
+      <div class="info-content" role="dialog" aria-modal="true" aria-labelledby="info-title">
+        <h3 id="info-title">R2</h3>
+        <p>
+          R2 is the signature of the designers and artists Lizá Défossez Ramalho (Troyes, France)
+          and Artur Rebelo (Porto, Portugal).
+        </p>
+        <p>
+          R2's practice extends beyond conventional boundaries, navigating both typical graphic
+          design's two-dimensional mediums and architectural landscapes. R2 has earned global
+          acclaim for its groundbreaking projects that contributed to redefine the boundaries of the
+          design field. Driven by an unwavering commitment to excellence, they passionately devote
+          themselves to crafting high-quality, both conceptually and visually, designed projects. R2
+          Design studio was co-founded in 1995 by Defossez Ramalho & Rebelo and works with cultural
+          institutions and commercial clients in fields ranging from culture and lifestyle to
+          industry.
+        </p>
+        <p>
+          R2's multidisciplinary approach allows them to respond effectively to a wide range of
+          projects from Dam Signage in the Douro River (with Souto de Moura-Architects) to extensive
+          branding that includes typography on building ceilings (Casa & typography do Conto), to a
+          complex museum graphic identity with more than 14 locations (Museu do Porto). Recent
+          projects includes branding project for Évora 2027, European Culture Capital in 2027 as
+          well as for Vhils Studio.
+        </p>
+      </div>
+      <aside class="info-sidebar" aria-label="Services and contacts">
+        <div class="services">
+          <div>
+            <h4>Art Practice</h4>
+            <p>Drawings</p>
+            <p>Visual Essays</p>
+            <p>Photography</p>
+            <p>Film</p>
+            <p>Sculpture</p>
+            <p>Spacial</p>
+          </div>
+          <div>
+            <h4>Design Office</h4>
+            <p>Art Direction</p>
+            <p>Graphic Design</p>
+            <p>Identity</p>
+            <p>Print</p>
+            <p>Exhibition</p>
+            <p>Wayfinding</p>
+          </div>
+        </div>
+
+        <div class="contacts">
+          <h4>Contacts</h4>
+          <p><a href="mailto:info@r2design.pt">info(at)r2design.pt</a></p>
+          <p><a href="tel:+351931156655">+351 931 156 655</a></p>
+          <p><a href="https://www.instagram.com/r2design.pt/">Instagram</a></p>
+          <p><a href="https://www.facebook.com/r2design.pt/">Facebook</a></p>
+        </div>
+      </aside>
+    </section>
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      const marks = document.querySelectorAll(".mark");
+      const infoOverlay = document.querySelector(".info-overlay");
+      const infoTriggers = document.querySelectorAll(".info-trigger");
+      const infoClose = document.querySelector(".info-close");
+      let activeSlide = 0;
+      let canMoveOnWheel = true;
+
+      function randomBetween(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function getEdge(mark) {
+        if (mark.classList.contains("mark-r")) {
+          return "left";
+        }
+
+        if (mark.classList.contains("mark-2")) {
+          return "right";
+        }
+
+        return "left";
+      }
+
+      function moveMarks() {
+        marks.forEach((mark) => {
+          const rect = mark.getBoundingClientRect();
+          const padding = 16;
+          const maxX = window.innerWidth - rect.width - padding;
+          const maxY = window.innerHeight - rect.height - padding;
+          const edge = getEdge(mark);
+
+          mark.style.left = edge === "left" ? `${padding}px` : `${Math.max(padding, maxX)}px`;
+          mark.style.top = `${randomBetween(padding, Math.max(padding, maxY))}px`;
+        });
+      }
+
+      function showSlide(index) {
+        slides[activeSlide].classList.remove("is-active");
+        activeSlide = (index + slides.length) % slides.length;
+        slides[activeSlide].classList.add("is-active");
+      }
+
+      function navigateSlides(direction) {
+        showSlide(activeSlide + (direction === "next" ? 1 : -1));
+        moveMarks();
+      }
+
+      window.addEventListener("load", moveMarks);
+      window.addEventListener("resize", moveMarks);
+      window.addEventListener(
+        "wheel",
+        () => {
+          if (document.body.classList.contains("info-is-open")) {
+            return;
+          }
+
+          if (!canMoveOnWheel) {
+            return;
+          }
+
+          canMoveOnWheel = false;
+          moveMarks();
+
+          setTimeout(() => {
+            canMoveOnWheel = true;
+          }, 700);
+        },
+        { passive: true },
+      );
+
+      document.addEventListener("click", (event) => {
+        if (event.target.closest(".info-trigger") || event.target.closest(".info-overlay")) {
+          return;
+        }
+
+        const direction = event.clientX > window.innerWidth / 2 ? "next" : "previous";
+        document.body.dataset.slideDirection = direction;
+        navigateSlides(direction);
+      });
+
+      function openInfo() {
+        infoOverlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("info-is-open");
+      }
+
+      function closeInfo() {
+        infoOverlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("info-is-open");
+      }
+
+      infoTriggers.forEach((trigger) => {
+        trigger.addEventListener("click", openInfo);
+      });
+
+      infoClose.addEventListener("click", closeInfo);
+
+      infoOverlay.addEventListener("click", (event) => {
+        if (event.target === infoOverlay) {
+          closeInfo();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeInfo();
+        }
+      });
+    </script>
   </body>
 </html>
