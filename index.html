@@ -16,7 +16,8 @@
 
   <body>
     <div class="slider" aria-hidden="true">
-      <img class="slide is-active" src="images/slides/slide-01.jpg" alt="" />
+      <video class="slide is-active" src="images/slides/slide-13.mov" muted loop playsinline></video>
+      <img class="slide" src="images/slides/slide-01.jpg" alt="" />
       <img class="slide" src="images/slides/slide-02.jpg" alt="" />
       <img class="slide" src="images/slides/slide-03.jpg" alt="" />
       <img class="slide" src="images/slides/slide-04.jpg" alt="" />
@@ -28,6 +29,8 @@
       <img class="slide" src="images/slides/slide-10.jpg" alt="" />
       <img class="slide" src="images/slides/slide-11.jpg" alt="" />
       <img class="slide" src="images/slides/slide-12.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-14.jpg" alt="" />
+      <img class="slide" src="images/slides/slide-15.jpg" alt="" />
     </div>
 
     <main>
@@ -157,8 +160,15 @@
 
       function showSlide(index) {
         slides[activeSlide].classList.remove("is-active");
+        if (slides[activeSlide].tagName === "VIDEO") {
+          slides[activeSlide].pause();
+        }
+
         activeSlide = (index + slides.length) % slides.length;
         slides[activeSlide].classList.add("is-active");
+        if (slides[activeSlide].tagName === "VIDEO") {
+          slides[activeSlide].play();
+        }
       }
 
       function navigateSlides(direction) {
@@ -166,7 +176,12 @@
         moveMarks();
       }
 
-      window.addEventListener("load", moveMarks);
+      window.addEventListener("load", () => {
+        moveMarks();
+        if (slides[activeSlide].tagName === "VIDEO") {
+          slides[activeSlide].play();
+        }
+      });
       window.addEventListener("resize", moveMarks);
       window.addEventListener(
         "wheel",
