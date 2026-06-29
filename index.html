@@ -31,6 +31,7 @@
       <img class="slide" src="images/slides/slide-12.jpg" alt="" />
       <img class="slide" src="images/slides/slide-14.jpg" alt="" />
       <img class="slide" src="images/slides/slide-15.jpg" alt="" />
+      <video class="slide" src="images/slides/slide-16.mp4" muted loop playsinline></video>
     </div>
 
     <main>
@@ -167,7 +168,7 @@
         activeSlide = (index + slides.length) % slides.length;
         slides[activeSlide].classList.add("is-active");
         if (slides[activeSlide].tagName === "VIDEO") {
-          slides[activeSlide].play();
+          slides[activeSlide].play().catch(() => {});
         }
       }
 
@@ -179,13 +180,13 @@
       window.addEventListener("load", () => {
         moveMarks();
         if (slides[activeSlide].tagName === "VIDEO") {
-          slides[activeSlide].play();
+          slides[activeSlide].play().catch(() => {});
         }
       });
       window.addEventListener("resize", moveMarks);
       window.addEventListener(
         "wheel",
-        () => {
+        (event) => {
           if (document.body.classList.contains("info-is-open")) {
             return;
           }
@@ -194,8 +195,20 @@
             return;
           }
 
+          const scrollAmount =
+            Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+              ? event.deltaY
+              : event.deltaX;
+
+          if (Math.abs(scrollAmount) < 8) {
+            return;
+          }
+
           canMoveOnWheel = false;
-          moveMarks();
+          const direction = scrollAmount > 0 ? "next" : "previous";
+
+          document.body.dataset.slideDirection = direction;
+          navigateSlides(direction);
 
           setTimeout(() => {
             canMoveOnWheel = true;

@@ -17,6 +17,8 @@
   --page-pad: 1rem;
   --grid-gap: 1rem;
   --header-offset: 3.5rem;
+  --mobile-action-left: 1rem;
+  --mobile-action-bottom: 1em;
 }
 
 body {
@@ -290,8 +292,8 @@ footer {
   footer {
     position: fixed;
     display: block;
-    bottom: 1em;
-    left: 1rem;
+    bottom: var(--mobile-action-bottom);
+    left: var(--mobile-action-left);
   }
 
   nav a {
@@ -322,8 +324,8 @@ footer {
     grid-column: 1 / -1;
     grid-row: 1;
     position: fixed;
-    bottom: 1em;
-    left: 1rem;
+    bottom: var(--mobile-action-bottom);
+    left: var(--mobile-action-left);
     z-index: 15;
   }
 
